@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: akshat1608/frontend-app
+        image: akshat1608/frontend-app:{PROJECT_VERSION}
         ports:
         - containerPort: 3000
 
