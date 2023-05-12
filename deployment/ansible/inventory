@@ -1,0 +1,2 @@
+[localhost]
+akshat ansible_connection=local

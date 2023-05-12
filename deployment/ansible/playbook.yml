@@ -1,0 +1,14 @@
+---
+- name: service deployment
+  hosts: all
+  tasks:
+#    - name: Start minikube service
+#      service:
+#        name: minikube
+#        state: started
+
+    - name: running kubernetes deployment
+      shell: kubectl apply -f ../deployment.yaml
+
+#    - name: running container
+#      shell: docker run -it -d -v /home/akshat/Projects/applogs/:/applogs akshat1608/speminiproject:latest
