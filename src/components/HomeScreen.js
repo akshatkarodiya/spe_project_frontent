@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // import data from "../data";
 import { Link }from 'react-router-dom';
 
-import axios from 'axios';
+// import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
-import { listBooks } from "../actions/productAction";
+import { listBooks } from "../actions/bookAction";
 
 function HomeScreen() {
     // const [books, setBooks] = useState([]);
@@ -24,16 +24,18 @@ function HomeScreen() {
 
         };
     },[])
-    return (
+    return loading ? <div>loading...</div>:
+           error ? <div>error.....</div>:
+    ( 
            <ul className="products">
                 {   books.map(book =>
                 <li key={book.bookId}> 
                     <div className="product">
-                    <Link to={"/books/" + book.bookId}>
+                    <Link to={"/book/" + book.bookId}>
                         <img className="product-image" src={book.image} alt="product"/>
                         </Link>
                         <div className="product-name">
-                            <Link to={"/books/" + book.bookId}>{book.title}</Link>
+                            <Link to={"/book/" + book.bookId}>{book.title}</Link>
                             </div>
                         <div className="product-author">{book.author}</div>
                         <div className="product-price">${book.price}</div>

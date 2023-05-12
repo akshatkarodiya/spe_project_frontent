@@ -1,24 +1,43 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import data from "../data";
-// function BookScreen() {
-//     return (<div className="temp">Book Screem</div>);
-// }
-// import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link , useParams,Redirect,useNavigate} from "react-router-dom";
+// import {useRouter} from 'next/router';
+import { useDispatch, useSelector } from "react-redux";
+import { detailsBooks } from "../actions/bookAction";
 
 function BookScreen(props) {
-    // if (!props.match) {
-    //     return <div>Loading...</div>;
-    // }
-    
+
+    const [qty, setQty] = useState(1);
+    const bookDetails = useSelector(state=>state.bookDetails);
+    const {book,loading,error} = bookDetails;
+    console.log(book)
+    const dispatch = useDispatch();
     const {id}=useParams();
-    const book = data.books.find(x => x._id === id)
+    // const router = useRouter();
+    // const history = useHistory();
+    useEffect(()=>{
+        
+        dispatch(detailsBooks(id));
+        return () => {
+            
+        };
+    }, [])
+    const navigate = useNavigate();
+    const handleAddtoCart = () => {
+        // window.location.replace(`/cart/${id}?qty=${qty}`);
+        navigate(`/cart/${id}?qty=${qty}`);
+        // router.push('/cart/'+id+'?qty='+qty);
+    }
 
     return <div>
+
         <div className="back-to-result">
             <Link to="/">Back to result</Link>
         </div>
-        <div className="details">
+
+        {loading? <div>loading..</div>:
+          error? <div>error...</div>:
+         (
+            <div className="details">
             <div className="details-image">
                 <img src={book.image} alt="book"></img>
             </div>
@@ -61,7 +80,7 @@ function BookScreen(props) {
                         Status: {book.status}
                     </li>
                     <li>
-                        Qty: <select>
+                        Qty: <select value={qty} onChange={(e)=>{setQty(e.target.value)}}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -69,12 +88,16 @@ function BookScreen(props) {
                         </select>
                     </li>
                     <li>
-                        <button className="button">Add to cart</button>
+                        <button onClick={handleAddtoCart} className="button">Add to cart</button>
                     </li>
                 </ul>
 
             </div>
         </div>
+         )
+        }
+
+        
 
     </div>
 }
