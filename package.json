@@ -1,6 +1,6 @@
 {
   "name": "frontent",
-  "proxy": "http://localhost:8082",
+  "proxy": "http://backend-app-service:8082",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
