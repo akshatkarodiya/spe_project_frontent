@@ -11,17 +11,17 @@ function SigninScreen(props) {
     const userSignin = useSelector(state=>state.userSignin)
     const {loading, userInfo, error} = userSignin; 
     const [searchParams, setSearchParams] = useSearchParams()
-    const redirect = searchParams.get('redirect')? searchParams.get('redirect'):'/';
-    console.log("heuheuh")
-    console.log(userSignin)
+    const redirect = searchParams.get('redirect')?searchParams.get('redirect'):'/';
+    // console.log("heuheuh")
+    // console.log(userSignin)
     // console.log(redirect);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(()=>{
         if (userInfo) {
-            
-            navigate("/shipping")
-        }
+            console.log(redirect);
+            window.location.replace(redirect);
+        } 
       
         return () => {
             

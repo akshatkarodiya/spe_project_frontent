@@ -36,7 +36,9 @@ body {
   align-items: center;
   padding: 0.5rem;
 }
-
+.tbody{
+  padding: 1rem;
+}
 .brand a {
   color: aliceblue;
   font-size: 2.5rem;
@@ -328,6 +330,7 @@ input {
 }
 th {
   text-align: left;
+  padding-bottom: 1rem;
 }
 tbody > tr:nth-child(odd) {
   background-color: #f0f0f0;

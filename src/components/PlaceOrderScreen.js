@@ -3,8 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams,useNavigate,useSearchParams } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartAction";
 import CheckoutSteps from "./CheckoutSteps";
+import { createOrder } from "../actions/orderActions";
 function PlaceOrderScreen(props){
     const cart = useSelector(state=>state.cart);
+    const orderCreate = useSelector(state => state.orderCreate);
+    const { loading, success, error, order } = orderCreate;
+    console.log(orderCreate)
     const navigate = useNavigate();
     const {cartItems,shipping,payment} = cart;
     if(!shipping){
@@ -13,17 +17,24 @@ function PlaceOrderScreen(props){
     if(!payment.paymentMethod){
         window.location.replace('/payment');
     }
+    // console.log(shipping)
     const itemsPrice = cartItems.reduce((a,c)=>a+c.price*c.qty,0);
     const shippingPrice = itemsPrice>100?0:10;
-    const taxPrice = 0.15*itemsPrice;
+    const taxPrice = parseInt((0.15*itemsPrice).toFixed(2));
+    // taxPrice.toFixed(2);
     const totalPrice = itemsPrice+shippingPrice+taxPrice;
     const dispatch = useDispatch();    
 
     useEffect(()=>{
-       
-    },[]);
+        if (success) {
+            navigate("/order/"+order.purchaseId);
+          }
+    },[success]);
     const placeOrderHandler = () => {
-        // window.location.replace(`/signin?redirect=shipping`);
+        dispatch(createOrder({
+            orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
+            taxPrice, totalPrice
+          }));
         
     }
 

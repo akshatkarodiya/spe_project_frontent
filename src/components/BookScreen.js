@@ -9,6 +9,7 @@ function BookScreen(props) {
     const [qty, setQty] = useState(1);
     const bookDetails = useSelector(state=>state.bookDetails);
     const {book,loading,error} = bookDetails;
+    console.log(loading);
     console.log(book)
     const dispatch = useDispatch();
     const {id}=useParams();

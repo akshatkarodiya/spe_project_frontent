@@ -12,6 +12,9 @@ import BooksScreen from './components/BooksScreen';
 import ShippingScreen from './components/ShippingScreen';
 import PaymentScreen from './components/PaymentScreen';
 import PlaceOrderScreen from './components/PlaceOrderScreen';
+import OrderScreen from './components/OrderScreen';
+import ProfileScreen from './components/ProfileScreen';
+import OrdersScreen from './components/OrdersScreen';
 
 
 
@@ -21,7 +24,7 @@ function App() {
     // <a href="/signin">Signin</a>
     // console.log(userSignin["name"]);
     const {userInfo} = userSignin;
-    console.log(userSignin);
+    // console.log(userInfo);
     const openMenu = () => {
         document.querySelector(".sidebar").classList.add("open")
     }
@@ -41,12 +44,15 @@ function App() {
              </div>
              <div className="header-links">
                 <a href="/cart">Cart</a>
-                {Object.keys(userSignin).length === 0 ?
-                ( <Link to="/signin">Signin</Link> ):
-                (<Link to="/profile">{userSignin.name}</Link>)
-                   
-                }
-               { userSignin && userSignin.isAdmin && (
+                {userInfo ? (
+                   <Link to="/profile">{userInfo.name}</Link>
+              
+            ) : (
+              <div>
+              <Link to="/signin/">Sign In</Link>
+              </div>
+            )}
+               { userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <a href="/profile">Admin</a>
                 <ul className="dropdown-content">
@@ -86,6 +92,10 @@ function App() {
                     <Route path="/payment" element={<PaymentScreen/>}></Route>
                     <Route path="/" exact={true} element={<HomeScreen/>}/>
                     <Route path="/cart/:id?" element={<CartScreen/>}/>
+                    <Route path="/order/:id" element={<OrderScreen/>} />
+                    <Route path="/profile/" element={<ProfileScreen/>} />
+                    <Route path="/orders" element={<OrdersScreen/>} />
+
                     </Routes>
                     </div>
                  

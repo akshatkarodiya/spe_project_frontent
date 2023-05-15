@@ -5,7 +5,8 @@ import { bookDeleteReducer, bookDetailsReducer, bookListReducer, bookSaveReducer
 // import thunk from 'redux-thunk';
 import { cartReducer } from "./reducer/cartReducer";
 import Cookies  from "js-cookie";
-import { userRegisterReducer, userSiginReducer } from "./reducer/userReducer";
+import { userRegisterReducer, userSiginReducer, userUpdateReducer } from "./reducer/userReducer";
+import { myOrderListReducer, orderCreateReducer, orderDetailsReducer, orderListReducer } from "./reducer/orderReducer";
 
 
 // const reducer = combineReducers({
@@ -32,8 +33,12 @@ const store = configureStore({
         userSignin: userSiginReducer,
         userRegister: userRegisterReducer,
         bookSave: bookSaveReducer,
-        bookDelete: bookDeleteReducer
-
+        bookDelete: bookDeleteReducer,
+        orderCreate: orderCreateReducer,
+        myOrderList: myOrderListReducer,
+        orderDetails: orderDetailsReducer,
+        userUpdate: userUpdateReducer,
+        orderList: orderListReducer
     },
     preloadedState: initialState
 });

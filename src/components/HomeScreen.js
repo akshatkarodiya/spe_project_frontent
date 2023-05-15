@@ -39,7 +39,7 @@ function HomeScreen() {
                             </div>
                         <div className="product-author">{book.author}</div>
                         <div className="product-price">${book.price}</div>
-                        <div className="product-price">${book.genre}</div>
+                        <div className="product-genre">{book.genre}</div>
                         <div className="product-rating">{book.rating} Stars ({book.numReviews})</div>
 
                     </div>

@@ -5,6 +5,9 @@ import { register } from "../actions/userAction";
 
 // import { detailsBooks } from "../actions/productAction";
 
+function isValidEmail(email){
+  return /\S+@\S+\.\S+/.test(email);
+}
 function RegisterScreen(props) {
 
     const [email, setEmail] = useState('');
@@ -14,23 +17,40 @@ function RegisterScreen(props) {
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     const userRegister = useSelector(state=>state.userRegister)
+    // console.log("inregistrer");
+    // console.log(userRegister);
     const {loading, userInfo, error} = userRegister; 
     const [searchParams, setSearchParams] = useSearchParams()
-    const redirect = searchParams.get('redirect')? searchParams.get('redirect'):'/';
+    const redirect = searchParams.get('redirect')?searchParams.get('redirect'):'/';
+    console.log(redirect);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(()=>{
+      console.log("in here");
+      console.log(userInfo);
         if (userInfo) {
-            navigate(redirect);
+            window.location.replace(redirect);
         }
         return () => {
             
         };
-    }, [])
- 
+    }, [userInfo])
+    
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(register(name,email,password,address,phoneNumber));
+        if(name==''){
+          document.querySelector(".name").classList.add("open")
+          return;
+        }
+        if(email=='' || !isValidEmail(email)){
+          document.querySelector(".email").classList.add("open")
+          return;
+        }
+       dispatch(register(name,email,password,address,phoneNumber));
+        if(userInfo)
+        {
+          window.location.replace(redirect);
+        }
       }
     
     return <div className="form">
@@ -49,6 +69,14 @@ function RegisterScreen(props) {
             </label>
             <input type="email" name="email" id="email"  onChange={(e) => setEmail(e.target.value)}>
             </input>
+            <aside className="email"> {email === '' && <div style={{ color: 'red' }}>Please enter your Email</div>}</aside>
+        </li>
+        <li>
+          <div></div>
+          <label>Name</label>
+          <input  id="name" name="name" onChange={(e) => setName(e.target.value)}>
+          </input>
+         <aside className="name">{name === '' && <div  style={{ color: 'red' }}>Please enter your name</div>} </aside> 
         </li>
         <li>
           <label htmlFor="password">Password</label>
@@ -59,11 +87,7 @@ function RegisterScreen(props) {
           <label htmlFor="password">Re-Password</label>
           <input type="password" id="rePassword" name="rePassword" onChange={(e) => setRePassword(e.target.value)}>
           </input>
-        </li>
-        <li>
-          <label>Address</label>
-          <input  id="address" name="address" onChange={(e) => setAddress(e.target.value)}>
-          </input>
+          {password !== rePassword && <div  style={{ color: 'red' }}>Password do not match</div>} 
         </li>
         <li>
           <label>ContactNumber</label>

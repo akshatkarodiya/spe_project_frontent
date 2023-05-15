@@ -3,13 +3,12 @@
 import axios from "axios"
 import Cookies from "js-cookie";
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_PAYMENT, CART_SAVE_SHIPPING } from "../constants/constant";
-
+import { useSelector } from 'react-redux';
 const addToCart = (bookId,qty) => async (dispatch,getState) => {
 
     try{
-        console.log(bookId);
-        console.log(qty);
-        // console.log("times");
+        // console.log(bookId);
+        // console.log(qty);
         const {data} = await axios.get("/book/getBookById/"+bookId);
         dispatch({type: CART_ADD_ITEM,payload: {
             book: data.bookId,
